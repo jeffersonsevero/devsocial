@@ -24,12 +24,12 @@ Route::get('/ping', function(){
 
 
 
-// Route::get('/401', 'AuthController@unauthorized')->name('auth.unauthorized');
+Route::get('/401', 'AuthController@unauthorized')->name('auth.unauthorized');
 
 
-// Route::post('/auth/login', 'AuthController@login')->name('auth.login');
-// Route::post('/auth/logout', 'AuthController@logout')->name('auth.logout');
-// Route::post('/auth/refresh', 'AuthController@refresh')->name('auth.refresh');
+Route::post('/auth/login', 'AuthController@login')->name('auth.login');
+Route::post('/auth/logout', 'AuthController@logout')->name('auth.logout');
+Route::post('/auth/refresh', 'AuthController@refresh')->name('auth.refresh');
 
 Route::post('/user', 'AuthController@create')->name('auth.create');
 // Route::put('/user', 'UserController@update')->name('user.update');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\repositories\UserRepository;
-use Illuminate\Http\Request;
+use App\Helpers\Message;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRequest;
+use App\services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -11,11 +13,63 @@ class AuthController extends Controller
 {
 
 
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
         $this->middleware('auth:api')->except(['login', 'create', 'unauthorized' ]);
+        $this->userService = $userService;
+
 
     }
+
+
+    public function create(UserRequest $request){
+
+        $response = $this->userService->create($request);
+
+        return response()->json($response);
+
+    }
+
+
+
+    public function unauthorized(){
+
+        $response = Message::error("Não autorizado!");
+
+        return response()->json($response, 401);
+
+    }
+
+
+
+    public function login(UserLoginRequest $request){
+
+        $data = $request->all();
+        $response = $this->userService->login($data);
+
+        return response()->json($response);
+
+
+
+    }
+
+
+    public function logout(){
+
+
+    }
+
+
+
+
+    public function refresh(){
+
+
+
+    }
+
 
 
 
