@@ -16,7 +16,7 @@ class Message{
     }
 
 
-    public static function success(string $message, string $token = null, array $data = null ){
+    public static function success(string $message = null, string $token = null, array $data = null ){
 
 
 

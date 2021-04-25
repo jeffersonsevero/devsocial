@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Message;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRequest;
-use App\services\UserService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -59,6 +59,10 @@ class AuthController extends Controller
     public function logout(){
 
 
+        $response = $this->userService->logout();
+
+        return response()->json($response);
+
     }
 
 
@@ -66,7 +70,9 @@ class AuthController extends Controller
 
     public function refresh(){
 
+        $response = $this->userService->refresh();
 
+        return response()->json($response);
 
     }
 

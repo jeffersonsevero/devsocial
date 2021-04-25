@@ -1,9 +1,11 @@
 <?php
 
-namespace App\services;
+namespace App\Services;
+
 
 use App\Helpers\Message;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -68,28 +70,74 @@ class UserService
 
 
 
-    public function login(array $data){
+    public function login(array $data)
+    {
 
 
         $token = Auth::guard('api')->attempt($data);
 
-        if(!$token){
+        if (!$token) {
 
             $response = Message::error('Dados errados!');
 
             return $response;
-
         }
 
 
         $response = Message::success("Login efetuado com sucesso", $token);
 
         return $response;
+    }
 
 
+    public function logout()
+    {
+        if (Auth::user()) {
+
+            Auth::logout();
+
+            $response = Message::success("Deslogado");
+            return $response;
+        }
+
+        return [];
     }
 
 
 
 
+
+    public function refresh()
+    {
+
+        $token = auth()->refresh();
+
+        $response = Message::success('', $token);
+    }
+
+
+
+
+    public function update(array $data)
+    {
+
+
+        try {
+
+            $user = $this->user->where('email', $data['email'])->first();
+
+            if(!$user){
+
+                return Message::error("Usuário não encontrado!");
+
+
+            }
+            $user->update($data);
+            return Message::success("Usuário atualizado com sucesso");
+
+        } catch (Exception $e) {
+            return Message::error($e->getMessage());
+
+        }
+    }
 }
