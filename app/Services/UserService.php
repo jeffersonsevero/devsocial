@@ -69,7 +69,7 @@ class UserService
     }
 
 
-
+    
     public function login(array $data)
     {
 
@@ -123,6 +123,8 @@ class UserService
 
 
         try {
+
+
 
             $user = $this->user->where('email', $data['email'])->first();
 

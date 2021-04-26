@@ -49,7 +49,6 @@ class UserRequest extends FormRequest
 
 
 
-
     protected function failedValidation(Validator $validator)
     {
 
