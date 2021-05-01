@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Helpers\Message;
+use App\Http\Requests\setAvatarRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\User;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Contracts\Providers\Auth as ProvidersAuth;
+use Intervention\Image\Facades\Image;
 
 class UserService
 {
@@ -20,7 +22,7 @@ class UserService
 
     public function __construct(User $user)
     {
-        $this->user = $user;
+        $this->user = Auth::user();
     }
 
 
@@ -69,7 +71,7 @@ class UserService
     }
 
 
-    
+
     public function login(array $data)
     {
 
@@ -124,8 +126,6 @@ class UserService
 
         try {
 
-
-
             $user = $this->user->where('email', $data['email'])->first();
 
             if(!$user){
@@ -141,5 +141,31 @@ class UserService
             return Message::error($e->getMessage());
 
         }
+    }
+
+
+
+
+    public function setAvatar(setAvatarRequest $request){
+
+        $image = $request["avatar"];
+
+        $name = time() . "." . $image->extension();
+
+        $destPath = public_path("/media/avatars");
+
+
+        $img = Image::make($image->path())->fit(200,200)->save("{$destPath}/{$name}");
+
+        $this->user->avatar = $name;
+        $this->user->save();
+
+        dd(url("/media/avatars/{$name}"));
+
+
+        return Message::success("Avatar salvo com sucesso!", null, ["url" => url("/media/avatars/{$name}")]);
+
+
+
     }
 }

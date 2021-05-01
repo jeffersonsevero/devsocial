@@ -2,15 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\Message;
-use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
+use App\Helpers\Message;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 
 
-
-class UserLoginRequest extends FormRequest
+class setAvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,8 +29,7 @@ class UserLoginRequest extends FormRequest
     {
         return [
 
-            'email' => 'required|email',
-            'password' => 'required'
+            "avatar" => "required|image|mimes:png,jpg|max:2048"
 
         ];
     }
@@ -41,11 +38,12 @@ class UserLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Preencha todos os campos',
-            'email' => 'Insira um e-mail válido'
+            "required" => "Campo avatar obrigatório",
+            "image" => "Arquivo precisa ser uma imagem",
+            "mimes:png,jpg" => "O arquivo precisa ser do tipo PNG ou JPG",
+            "max:2048" => "A imagem não pode ser maior que 2MB"
         ];
     }
-
 
 
     protected function failedValidation(ValidationValidator $validator)
@@ -56,6 +54,9 @@ class UserLoginRequest extends FormRequest
 
         throw new HttpResponseException($response);
     }
+
+
+
 
 
 }

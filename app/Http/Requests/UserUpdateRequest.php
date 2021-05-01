@@ -40,8 +40,7 @@ class UserUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'required.name' => 'Campo name Obrigatório',
-            'required.email' => 'Campo email obrigatório',
+            'required' => 'Campo obrigatório',
             'email' => 'Insira um e-mail válido',
             'string' => 'Campo precisa ser texto'
         ];

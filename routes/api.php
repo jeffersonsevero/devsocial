@@ -33,7 +33,7 @@ Route::post('/auth/refresh', 'AuthController@refresh')->name('auth.refresh');
 
 Route::post('/user', 'AuthController@create')->name('auth.create');
 Route::put('/user', 'UserController@update')->name('user.update');
-// Route::post('/user/avatar', 'UserController@updateAvatar')->name('user.updateAvatar');
+Route::post('/user/avatar', 'UserController@updateAvatar')->name('user.updateAvatar');
 // Route::post('/user/cover', 'UserController@updateCover')->name('user.updateCover');
 
 

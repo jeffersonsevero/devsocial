@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\setAvatarRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -23,8 +24,6 @@ class UserController extends Controller
 
 
 
-
-
     public function update(UserUpdateRequest $request){
 
 
@@ -32,6 +31,18 @@ class UserController extends Controller
 
         return response()->json($this->userService->update($data));
 
+
+    }
+
+
+
+
+
+    public function updateAvatar(setAvatarRequest $request){
+
+        $response = $this->userService->setAvatar($request);
+
+        return response()->json($response);
 
 
     }
